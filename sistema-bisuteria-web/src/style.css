@@ -1,0 +1,104 @@
+.page-title {
+  font-size: 2rem;
+  color: var(--primary-olive);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  transition: all 0.3s;
+}
+
+.btn-primary {
+  background: var(--primary-olive);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--soft-moss);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--primary-olive);
+  color: var(--primary-olive);
+}
+
+.btn-outline:hover {
+  background: var(--primary-olive);
+  color: white;
+}
+
+.btn-whatsapp {
+  background: #25d366;
+  color: white;
+}
+
+.btn-whatsapp:hover {
+  background: #1da851;
+}
+
+.section-title {
+  font-size: 1.75rem;
+  color: var(--primary-olive);
+  margin-bottom: 0.5rem;
+}
+
+.section-subtitle {
+  color: var(--soft-moss);
+  margin-bottom: 2rem;
+}
+
+.grid-products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .grid-products {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 1.35rem;
+  }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.25s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* Botón vaciar carrito outline */
+.btn-outline.btn-vaciar:hover {
+  background: var(--danger);
+  border-color: var(--danger);
+  color: white;
+}
+
+/* Responsive para el grid de productos en mobile */
+@media (max-width: 480px) {
+  .grid-products {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
