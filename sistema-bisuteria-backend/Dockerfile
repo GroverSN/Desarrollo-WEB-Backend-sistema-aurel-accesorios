@@ -2,11 +2,11 @@ FROM node:22-alpine
 
 WORKDIR /app
 
-# Copiamos solo el package.json (Ignoramos pnpm-lock y .npmrc para que no interfieran)
+# Copiamos solo el package.json
 COPY package.json ./
 
-# Usamos npm para instalar de forma limpia y directa en Render
-RUN npm install
+# 🚀 LA SOLUCIÓN: Forzamos la instalación ignorando los conflictos de versiones antiguas
+RUN npm install --legacy-peer-deps
 
 # Copiamos el resto del código de NestJS
 COPY . .
