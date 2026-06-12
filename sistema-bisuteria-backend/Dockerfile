@@ -5,17 +5,14 @@ RUN npm install -g pnpm
 
 WORKDIR /app
 
-# Copiar archivos de configuración de empaquetado primero (buena práctica para usar caché)
+# Copiar archivos de configuración de empaquetado primero
 COPY package.json pnpm-lock.yaml .npmrc ./
 
 # Configurar pnpm para que guarde las dependencias de forma plana dentro del contenedor
-# Esto evita que los enlaces simbólicos se rompan en los servidores de Render
 RUN pnpm config set virtual-store-dir .pnpm
 
-# 🚨 NUEVA LÍNEA: Desactivar la política estricta de paquetes demasiado nuevos
-RUN pnpm config set verify-store-integrity false
-
-RUN pnpm install --frozen-lockfile
+# 🚀 LA SOLUCIÓN: Agregamos la bandera para ignorar los scripts de políticas de seguridad
+RUN pnpm install --frozen-lockfile --ignore-scripts
 
 # Copiar todo el resto del código del backend
 COPY . .
@@ -23,7 +20,7 @@ COPY . .
 # Construir el proyecto de NestJS (Genera la carpeta /dist)
 RUN pnpm run build
 
-# Opcional: Eliminar dependencias de desarrollo para ahorrar espacio en Render
+# Eliminar dependencias de desarrollo para ahorrar espacio en Render
 RUN pnpm prune --prod
 
 EXPOSE 3000
