@@ -5,16 +5,16 @@ RUN npm install -g pnpm
 
 WORKDIR /app
 
-# Copiar solo el package.json y el .npmrc (Omitimos el pnpm-lock.yaml conflictivo)
+# Copiar solo el package.json y el .npmrc
 COPY package.json .npmrc ./
 
 # Configurar pnpm para que guarde las dependencias de forma plana dentro del contenedor
 RUN pnpm config set virtual-store-dir .pnpm
 
-# 🚀 LA SOLUCIÓN DEFINITIVA: Instalar directamente desde las dependencias declaradas
-RUN pnpm install --no-frozen-lockfile
+# 🚀 LA SOLUCIÓN AL WARNING: Autorizamos explícitamente compilar sharp y unrs-resolver
+RUN pnpm install --no-frozen-lockfile --allow-build=sharp,unrs-resolver
 
-# Ahora recién copiamos todo el resto del código del backend (incluyendo el lockfile local si quiere)
+# Ahora recién copiamos todo el resto del código del backend
 COPY . .
 
 # Construir el proyecto de NestJS (Genera la carpeta /dist)
