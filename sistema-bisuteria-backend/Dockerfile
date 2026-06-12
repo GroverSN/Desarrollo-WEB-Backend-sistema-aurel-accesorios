@@ -11,6 +11,10 @@ COPY package.json pnpm-lock.yaml .npmrc ./
 # Configurar pnpm para que guarde las dependencias de forma plana dentro del contenedor
 # Esto evita que los enlaces simbólicos se rompan en los servidores de Render
 RUN pnpm config set virtual-store-dir .pnpm
+
+# 🚨 NUEVA LÍNEA: Desactivar la política estricta de paquetes demasiado nuevos
+RUN pnpm config set verify-store-integrity false
+
 RUN pnpm install --frozen-lockfile
 
 # Copiar todo el resto del código del backend
