@@ -8,13 +8,11 @@ WORKDIR /app
 # Copiar solo el package.json y el .npmrc
 COPY package.json .npmrc ./
 
-# Configurar pnpm para que guarde las dependencias de forma plana dentro del contenedor
-RUN pnpm config set virtual-store-dir .pnpm
+# 🚀 LA SOLUCIÓN DEFINITIVA: Pasar las configuraciones como variables de entorno nativas
+ENV PNPM_CONFIG_VIRTUAL_STORE_DIR=.pnpm
+ENV PNPM_CONFIG_ALLOWED_BUILDS=sharp,unrs-resolver
 
-# 🚀 Habilitar los scripts de compilación nativos para sharp y unrs-resolver de forma plana
-RUN pnpm config set allowed-builds sharp,unrs-resolver
-
-# Instalar dependencias sin el bloqueo estricto de lockfile
+# Instalar dependencias directamente
 RUN pnpm install --no-frozen-lockfile
 
 # Ahora recién copiamos todo el resto del código del backend
