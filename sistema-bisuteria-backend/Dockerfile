@@ -5,16 +5,16 @@ RUN npm install -g pnpm
 
 WORKDIR /app
 
-# Copiar archivos de configuración de empaquetado primero
-COPY package.json pnpm-lock.yaml .npmrc ./
+# Copiar solo el package.json y el .npmrc (Omitimos el pnpm-lock.yaml conflictivo)
+COPY package.json .npmrc ./
 
 # Configurar pnpm para que guarde las dependencias de forma plana dentro del contenedor
 RUN pnpm config set virtual-store-dir .pnpm
 
-# 🚀 LA SOLUCIÓN: Agregamos la bandera para ignorar los scripts de políticas de seguridad
-RUN pnpm install --frozen-lockfile --ignore-scripts
+# 🚀 LA SOLUCIÓN DEFINITIVA: Instalar directamente desde las dependencias declaradas
+RUN pnpm install --no-frozen-lockfile
 
-# Copiar todo el resto del código del backend
+# Ahora recién copiamos todo el resto del código del backend (incluyendo el lockfile local si quiere)
 COPY . .
 
 # Construir el proyecto de NestJS (Genera la carpeta /dist)
